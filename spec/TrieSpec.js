@@ -8,11 +8,11 @@ describe("Trie", function () {
   describe("with data", function () {
     beforeEach(function() {
       trie.insert("dog");
-      // trie.insert("dad");
-      // trie.insert("dot");
-      // trie.insert("do");
-      // trie.insert("bird");
-      // trie.insert("bird"); // Double-insert
+      trie.insert("dad");
+      trie.insert("dot");
+      trie.insert("do");
+      trie.insert("bird");
+      trie.insert("bird"); // Double-insert
     });
 
     describe("includes", function () {
