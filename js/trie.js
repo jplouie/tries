@@ -10,23 +10,6 @@ var Node = function(options) {
   else{
     this.isWord = false;
   }
-
-  this._insert = function(options) {
-    var children = this.children;
-    var letter = options.word[options.index];
-
-    if(!children[letter]){
-      children[letter] = new Node(options);
-    }
-    var node = children[letter];
-    options.index++;
-    var index = options.index;
-    var length = options.word.length;
-
-    // if(index < length){
-    //   node._insert(options);
-    // }
-  };
 };
 
 var Trie = function() {
@@ -39,18 +22,32 @@ var Trie = function() {
 
   // Inserts string into the Trie.
   this.insert = function(string) {
-    var options = {
-      word: string,
-      index: 0
-    }
-    this._insert(this.head, string);
+    var index = 0;
+    this._insert(this.head, string, index);
+    console.log(this);
   };
 
   // Recursive function. Helper function for the insert function.
-  this._insert = function(node, options) {
+  this._insert = function(node, string, index) {
     var children = node.children;
+    var letter = string[index];
+    for(child in children){
+      if(child.value === letter){
+        var childNode = child;
+      }
+    }
+    if(!childNode){
+      var options = {
+        word: string,
+        index: index
+      }
+      var childNode = new Node(options);
+      children[letter] = childNode;
+    }
 
-
+    if(++index < string.length){
+      this._insert(childNode, string, index);
+    }
   };
 
   // Returns true if string is in the trie. Returns false otherwise.
