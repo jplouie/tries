@@ -3,13 +3,7 @@ var Node = function(options) {
   this.value = options.word[options.index];
   this.word = options.word.substr(0, options.index + 1);
   this.children = {};
-
-  if(options.index = options.word.length){
-    this.isWord = true;
-  }
-  else{
-    this.isWord = false;
-  }
+  this.isWord = false;
 };
 
 var Trie = function() {
@@ -48,17 +42,32 @@ var Trie = function() {
     if(++index < string.length){
       this._insert(childNode, string, index);
     }
+    else{
+      childNode.isWord = true;
+    }
   };
 
   // Returns true if string is in the trie. Returns false otherwise.
   this.includes = function(string) {
-
+    var index = 0;
+    return this._includes(this.head, string, index);
   };
 
   // Recursive function. Returns true if string is in the trie. Returns false
   // otherwise.
-  this._includes = function() {
-
+  this._includes = function(node, string, index) {
+    var children = node.children;
+    var letter = string[index];
+    if(children[letter]){
+      if(index === string.length - 1){
+        
+      }
+      var childNode = children[letter];
+      return this._includes(childNode, string, ++index);
+    }
+    else{
+      return false;
+    }
   };
 
   // Search for all strings that have 'prefix' as the prefix.
