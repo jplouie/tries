@@ -18,18 +18,14 @@ var Trie = function() {
   this.insert = function(string) {
     var index = 0;
     this._insert(this.head, string, index);
-    console.log(this);
   };
 
   // Recursive function. Helper function for the insert function.
   this._insert = function(node, string, index) {
     var children = node.children;
     var letter = string[index];
-    for(child in children){
-      if(child.value === letter){
-        var childNode = child;
-      }
-    }
+    var childNode = children[letter];
+
     if(!childNode){
       var options = {
         word: string,
@@ -50,6 +46,7 @@ var Trie = function() {
   // Returns true if string is in the trie. Returns false otherwise.
   this.includes = function(string) {
     var index = 0;
+    console.log(this.head);
     return this._includes(this.head, string, index);
   };
 
@@ -58,10 +55,10 @@ var Trie = function() {
   this._includes = function(node, string, index) {
     var children = node.children;
     var letter = string[index];
-    if(children[letter]){
-      if(index === string.length - 1){
-        
-      }
+    if(node.word === string){
+      return true;
+    }
+    else if(children[letter]){
       var childNode = children[letter];
       return this._includes(childNode, string, ++index);
     }
