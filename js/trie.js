@@ -45,8 +45,10 @@ var Trie = function() {
 
   // Returns true if string is in the trie. Returns false otherwise.
   this.includes = function(string) {
+    if(!string){
+      return false;
+    }
     var index = 0;
-    console.log(this.head);
     return this._includes(this.head, string, index);
   };
 
@@ -55,7 +57,7 @@ var Trie = function() {
   this._includes = function(node, string, index) {
     var children = node.children;
     var letter = string[index];
-    if(node.word === string){
+    if(node.word === string && node.isWord){
       return true;
     }
     else if(children[letter]){
