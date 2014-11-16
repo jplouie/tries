@@ -73,36 +73,72 @@ var Trie = function() {
   //
   // Returns Array of Strings.
   this.search = function(prefix) {
-
+    var node = this.head;
+    if(prefix){
+      return this._search(node, prefix.split(''));
+    }
+    else{
+      return [];
+    }
   };
 
   // Recursive function. Helper function for the search function.
-  this._search = function() {
+  this._search = function(node, arr) {
+    var children = node.children;
+    var letter = arr.shift();
+    if(children[letter]){
+      if(arr.length){
+        return this._search(children[letter], arr);
+      }
+      else{
 
+      }
+    }
+    else{
+      return [];
+    }
   };
 
   // Find the node that correspond to the last character in the string.
   //
   // Returns Node.
   this.findLastNode = function(string) {
-
+    var node = this.head;
+    if(!string){
+      return node;
+    }
+    else{
+      return this._findLastNode(node, string.split(''));
+    }
   };
 
   // Recursive function. Helper function for the findLastNode function.
-  this._findLastNode = function() {
-
+  this._findLastNode = function(node, arr) {
+    var letter = arr.shift();
+    var child = node.children[letter];
+    if(child){
+      if(arr.length){
+        return this._findLastNode(child, arr);
+      }
+      else{
+        return child;
+      }
+    }
+    else{
+      return null;
+    }
   };
 
   // Given a node, return all the strings that are part of this node.
   //
   // Returns Array of Strings.
   this.iterate = function(node) {
-
+    return this._iterate(node, arr);
   };
 
   // Recursive helper function for .iterate
-  this._iterate = function() {
-
+  this._iterate = function(node, arr) {
+    
   };
 
   // You may find this function useful for implementing iterate().
