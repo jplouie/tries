@@ -73,8 +73,9 @@ var Trie = function() {
   //
   // Returns Array of Strings.
   this.search = function(prefix) {
-    var node = this.head;
+    var head = this.head;
     if(prefix){
+      var node = this.findLastNode(prefix);
       return this._search(node, prefix.split(''));
     }
     else{
@@ -133,12 +134,18 @@ var Trie = function() {
   //
   // Returns Array of Strings.
   this.iterate = function(node) {
+    var arr = [];
     return this._iterate(node, arr);
   };
 
   // Recursive helper function for .iterate
   this._iterate = function(node, arr) {
-    
+
+    var children = node.children;
+    for(var i = 0; i < children.length; i++){
+      this._iterate(children[i], arr);
+    }
+    return arr
   };
 
   // You may find this function useful for implementing iterate().
