@@ -134,16 +134,27 @@ var Trie = function() {
   //
   // Returns Array of Strings.
   this.iterate = function(node) {
-    var arr = [];
-    return this._iterate(node, arr);
+    if(node){
+      var arr = [];
+      var word = node.word;
+      var pre = word.substr(0, word.length - 1);
+      return this._iterate(node, arr, pre);
+    }
+    else{
+      return [];
+    }
   };
 
   // Recursive helper function for .iterate
-  this._iterate = function(node, arr) {
-
+  this._iterate = function(node, arr, pre) {
+    var word = node.word;
+    if(node.isWord){
+      var str = word.substr(pre.length);
+      arr.push(str);
+    }
     var children = node.children;
-    for(var i = 0; i < children.length; i++){
-      this._iterate(children[i], arr);
+    for(child in children){
+      this._iterate(children[child], arr, pre);
     }
     return arr
   };
