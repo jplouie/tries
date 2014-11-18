@@ -73,31 +73,34 @@ var Trie = function() {
   //
   // Returns Array of Strings.
   this.search = function(prefix) {
-    var head = this.head;
+    var arr = [];
     if(prefix){
       var node = this.findLastNode(prefix);
-      return this._search(node, prefix.split(''));
+      if(node){
+        return this._search(node, arr);
+      }
+      else{
+        return [];
+      }
     }
     else{
-      return [];
+      var head = this.head;
+      return this._search(head, arr);
     }
   };
 
   // Recursive function. Helper function for the search function.
   this._search = function(node, arr) {
-    var children = node.children;
-    var letter = arr.shift();
-    if(children[letter]){
-      if(arr.length){
-        return this._search(children[letter], arr);
-      }
-      else{
-
+    if(node.isWord){
+      arr.push(node.word);
+    }
+    if(node.children){
+      var children = node.children;
+      for(child in children){
+        this._search(children[child], arr);
       }
     }
-    else{
-      return [];
-    }
+    return arr;
   };
 
   // Find the node that correspond to the last character in the string.
@@ -156,7 +159,7 @@ var Trie = function() {
     for(child in children){
       this._iterate(children[child], arr, pre);
     }
-    return arr
+    return arr;
   };
 
   // You may find this function useful for implementing iterate().
